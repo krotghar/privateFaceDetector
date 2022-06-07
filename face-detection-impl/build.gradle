@@ -1,0 +1,52 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+}
+
+android {
+    compileSdkVersion setup.compileSdk
+    buildToolsVersion setup.buildTools
+
+    defaultConfig {
+        minSdkVersion setup.minSdk
+        targetSdkVersion setup.targetSdk
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility javaVersion
+        targetCompatibility javaVersion
+    }
+
+    kotlinOptions {
+        jvmTarget = javaVersion
+    }
+
+}
+
+dependencies {
+    implementation project(':face-detection-api')
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "androidx.core:core-ktx:${versions.core_ktx}"
+
+    googlePlayImplementation "com.google.mlkit:face-detection:${versions.mlKitFacedetection}" // ML Kit Face detection
+
+    implementation "androidx.camera:camera-camera2:${versions.camerax}" // CameraX core library using camera2 implementation
+    implementation "androidx.camera:camera-lifecycle:${versions.camerax}" // CameraX Lifecycle Library
+    implementation "androidx.camera:camera-view:${versions.cameraxview}" // CameraX View class
+
+    // Timber
+    implementation "com.jakewharton.timber:timber:${versions.timber}"
+    //Dagger
+    implementation "com.google.dagger:dagger:${versions.dagger}"
+    kapt "com.google.dagger:dagger-compiler:${versions.dagger}"
+}
